@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.lang.*;
-
 /**
  * Reducer solves the following problem: given a set of sorted input files (each
  * containing the same type of data), merge them into one sorted file. 
@@ -12,7 +11,7 @@ public class Reducer {
     private List<FileIterator> fileList;
     private String type,dirName,outFile;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 		if (args.length != 3) {
 			System.out.println("Usage: java Reducer <weather|thesaurus> <dir_name> <output_file>");
 			System.exit(1);
@@ -40,7 +39,7 @@ public class Reducer {
 	/**
 	 * Carries out the file merging algorithm described in the assignment description. 
 	 */
-    public void run() {
+public void run(){
 		File dir = new File(dirName);
 		File[] files = dir.listFiles();
 		Arrays.sort(files);
@@ -68,7 +67,61 @@ public class Reducer {
 			System.out.println("Invalid type of data! " + type);
 			System.exit(1);
 		}
+		
+		// Make priority queue to hold fileLines, fill queue
+		FileLinePriorityQueue q = 
+				new FileLinePriorityQueue(files.length, r.getComparator());
+		for(int i = 0;i < files.length;i++) 
+		{
+			try
+			{
+				q.insert(fileList.get(i).next());
+			}
+			catch (PriorityQueueFullException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		try
+		{
+			boolean emptyRecord = true;
+			FileWriter fWriter = new FileWriter(outFile);
+			PrintWriter pWriter = new PrintWriter(fWriter);
+			while(!q.isEmpty()) 
+			{
 
-		// TODO
+				FileLine e = q.removeMin();
+				if (emptyRecord || e.equals(r.getComparator()))
+				{
+					r.join(e);
+					emptyRecord = false;
+				}
+				else
+				{
+					pWriter.println(r);
+					r.clear();
+					emptyRecord = true;
+					r.join(e);
+				}
+				FileLine f = e.getFileIterator().next();
+				q.insert(f);
+			}
+			pWriter.println(r);
+			pWriter.close();
+		}
+		catch (PriorityQueueEmptyException E)
+		{
+			System.out.println(E.getMessage());
+		}
+		catch (PriorityQueueFullException F)
+		{
+			System.out.println(F.getMessage());
+		}
+		catch (IOException I)
+		{
+			System.out.println(I.getMessage());
+		}
     }
 }
