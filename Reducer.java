@@ -1,3 +1,16 @@
+/**
+ * Semester:         CS367 Spring 2016 
+ * PROJECT:          p3
+ * FILE:             Reducer
+ *
+ * Authors: Bryan Watson
+ * Author1: Bryan Watson, bwatson2@wisc.edu, lec001
+ *
+ * ---------------- OTHER ASSISTANCE CREDITS 
+ * Persons: N/A
+ * 
+ * Online sources: N/A
+ */
 import java.io.*;
 import java.util.*;
 import java.lang.*;

@@ -11,9 +11,6 @@
  * Persons: N/A
  * 
  * Online sources: N/A
- *
- * An implementation of the MinPriorityQueueADT interface. This implementation stores FileLine objects.
- * See MinPriorityQueueADT.java for a description of each method. 
  */
 import java.util.Comparator;
 
