@@ -1,3 +1,20 @@
+/**
+ * Semester:         CS367 Spring 2016 
+ * PROJECT:          p3
+ * FILE:             WeatherRecord
+ *
+ * Authors: Mason & Zexing
+ * Author1: Mason Gomm, mgomm@wisc.edu, gomm, lec001
+ * Author2: Zexing Li(Richard), zli674@wisc.edu, zexing, lec001
+ *
+ * ---------------- OTHER ASSISTANCE CREDITS 
+ * Persons: N/A
+ * 
+ * Online sources: N/A
+ *
+ * An implementation of the MinPriorityQueueADT interface. This implementation stores FileLine objects.
+ * See MinPriorityQueueADT.java for a description of each method. 
+ */
 import java.util.Comparator;
 
 /**
@@ -6,8 +23,8 @@ import java.util.Comparator;
  * l stores the weather readings, in the same order as the files from which they came are indexed.
  */
 public class WeatherRecord extends Record{
-    private int ID;
-    private int date;
+    private double ID;
+    private double date;
     double[] info = new double[getNumFiles()];
 
 	/**
@@ -27,27 +44,45 @@ public class WeatherRecord extends Record{
 		public int compare(FileLine l1, FileLine l2) {
 			String[] line1 = l1.getString().split(",");
 			String[] line2 = l2.getString().split(",");
-			int[] info1 = new int[3];
-			int[] info2 = new int[3];
+			double[] info1 = new double[line1.length];
+			double[] info2 = new double[line2.length];
 			
-			for (int i = 0; i <= line1.length || i <= line2.length; i++) {
-				info1[i] = Integer.parseInt(line1[i]);
-				info2[i] = Integer.parseInt(line2[i]);
+			for (int i = 0; i < line1.length && i < line2.length; i++) {
+				info1[i] = Double.parseDouble(line1[i]);
+				info2[i] = Double.parseDouble(line2[i]);
 			}
 			
 			if (info1[0] == info2[0]) {
-				return info1[1] - info2[1];
+				if(info1[1] - info2[1]>0){
+					return (int)(info1[1] - info2[1]) + 1;
+				}
+				else if(info1[1] - info2[1]<0){
+					return (int)(info1[1] - info2[1]) - 1;
+				}
+				else {
+					//System.out.println(info1[0]+ " "+ info2[0]+" " + info1[1]+ " " + info2[1]);
+					return 0;
+				}
 			}
 			else {
-				return info1[0] - info2[0];
+				if(info1[0] - info2[0]>0){
+					return (int)(info1[0] - info2[0]) + 1;
+				}
+				else if(info1[0] - info2[0]<0){
+					return (int)(info1[0] - info2[0]) - 1;
+				}
+				else {
+					//System.out.println(info1[0] + info2[0] + info1[1] + info2[1]);
+					return 0;
+				}
 			}
 		}
 		
 		public boolean equals(Object o) {
 			FileLine data = (FileLine) o;
 			String[] line1 = data.getString().split(",");
-			int Id = Integer.parseInt(line1[0]);
-			int d8 = Integer.parseInt(line1[1]);
+			double Id = Double.parseDouble(line1[0]);
+			double d8 = Double.parseDouble(line1[1]);
 			
 			if (Id == ID && d8 == date) {
 				return true;
@@ -85,8 +120,8 @@ public class WeatherRecord extends Record{
 	 */
     public void join(FileLine li) {
 		String[] line = li.getString().split(",");
-		int ID = Integer.parseInt(line[0]);
-		int date = Integer.parseInt(line[1]);
+		double ID = Double.parseDouble(line[0]);
+		double date = Double.parseDouble(line[1]);
 		double info = Double.parseDouble(line[2]);
 		
 		this.ID = ID;
@@ -107,7 +142,11 @@ public class WeatherRecord extends Record{
 				product += (data + ",");
 			}
 		}
+		//Removes extra comma
 		product = product.substring(0, product.length() - 1);
 		return product;
     }
 }
+
+
+

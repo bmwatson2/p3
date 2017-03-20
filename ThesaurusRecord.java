@@ -1,3 +1,19 @@
+/**
+ * Semester:         CS367 Spring 2016 
+ * PROJECT:          p3
+ * FILE:             ThesaurusRecord
+ *
+ * Authors: Mason Gomm
+ * Author1: Mason Gomm, mgomm@wisc.edu, gomm, lec001
+ *
+ * ---------------- OTHER ASSISTANCE CREDITS 
+ * Persons: N/A
+ * 
+ * Online sources: N/A
+ *
+ * An implementation of the MinPriorityQueueADT interface. This implementation stores FileLine objects.
+ * See MinPriorityQueueADT.java for a description of each method. 
+ */
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,6 +107,7 @@ public class ThesaurusRecord extends Record{
 		for (String myWord : synonyms) {
 			product += (myWord + ",");
 		}
+		//Removes the extra comma
 		product = product.substring(0, product.length() - 1);
 		return product;
 	}
